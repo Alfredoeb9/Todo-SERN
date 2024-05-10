@@ -8,18 +8,25 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
+import { HelmetProvider } from "react-helmet-async";
+import Home from "./pages/Home";
 
+// create the router for pages
 const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="/" element={<RootLayout />}></Route>)
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route index element={<Home />} />
+    </Route>
+  )
 );
+
+const helmetContext = {};
 
 function App() {
   return (
-    <div>
+    <HelmetProvider context={helmetContext}>
       <RouterProvider router={router} />
-      {/* <header className="text-6xl">yooo</header>
-      <h1 className="text-3xl font-bold underline text-red-600">test</h1> */}
-    </div>
+    </HelmetProvider>
   );
 }
 
