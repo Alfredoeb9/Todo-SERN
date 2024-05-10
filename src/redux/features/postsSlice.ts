@@ -2,9 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
+export type UregentLevels = "not urgent" | "uregent" | "super urgent";
+
+interface PostsDataState {
+  category: string;
+  post: string;
+  urgentLevel: UregentLevels;
+}
+
 interface PostsState {
   post: string;
-  postList: string[];
+  postList: PostsDataState[];
 }
 
 const initialState: PostsState = {
@@ -16,9 +24,15 @@ export const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    post: (state, action: PayloadAction<string>) => {
-      state.post = action.payload;
-      state.postList = [...state.postList, action.payload];
+    post: (state, action: PayloadAction<any>) => {
+      state.postList = [
+        ...state.postList,
+        {
+          category: action.payload.category,
+          post: action.payload.post,
+          urgentLevel: action.payload.urgentLevel,
+        },
+      ];
     },
   },
 });

@@ -5,13 +5,22 @@ import { post, posts } from "../redux/features/postsSlice";
 
 export default function Home() {
   const [task, setTask] = useState("");
+  const [urgentLevel, setUrgentLevel] = useState("");
   const dispatch = useAppDispatch();
   const postsList = useAppSelector(posts);
 
   function addTask() {
-    dispatch(post(task));
+    const taskStructure = {
+      urgentLevel,
+      post: task,
+      category: "",
+    };
+
+    dispatch(post(taskStructure));
     setTask("");
   }
+
+  const Uregentlevel = ["not urgent", "uregent", "super uregent"];
 
   return (
     <>
@@ -25,14 +34,27 @@ export default function Home() {
           value={task}
           onChange={(e) => setTask(e.target.value)}
         />
+        <select
+          name="category"
+          id="category"
+          onClick={(event) => setUrgentLevel(event.currentTarget.value)}
+        >
+          {Uregentlevel.map((level, i) => (
+            <option value={level} key={i}>
+              {level}
+            </option>
+          ))}
+        </select>
         <button aria-label="post todo" type="button" onClick={() => addTask()}>
           +
         </button>
 
-        {postsList?.map((post: string) => (
-          <>
-            <h2 className="text-blue-400">{post}</h2>
-          </>
+        {postsList?.map((list) => (
+          <div className="flex gap-3">
+            <div>{list.post}</div>
+            <div>{list.category}</div>
+            <div>{list.urgentLevel}</div>
+          </div>
         ))}
       </div>
     </>
