@@ -6,6 +6,7 @@ This project was bootstrapped with
 - Node.js
 - Express.js
 - Sqlite
+- Redux/toolkit
 
 ## Available Scripts
 
