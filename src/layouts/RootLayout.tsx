@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 
 export default function RootLayout() {
   return (
-    <div>
+    <div className="container m-auto pt-4">
       <Navbar />
       <div>
         <Outlet />

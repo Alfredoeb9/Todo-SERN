@@ -2,10 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import ReduxProvider from "./components/Providers/ReduxProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ReduxProvider>
+      <App />
+    </ReduxProvider>
   </React.StrictMode>
 );
