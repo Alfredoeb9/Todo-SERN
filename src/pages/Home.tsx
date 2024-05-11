@@ -1,26 +1,26 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { post, posts } from "../redux/features/postsSlice";
+import { Uregentlevel, Categories } from "../lib/hardData";
+import AddTask from "../components/AddTask";
 
 export default function Home() {
   const [task, setTask] = useState("");
   const [urgentLevel, setUrgentLevel] = useState("");
+  const [categoryOption, setCategoryOption] = useState("");
   const dispatch = useAppDispatch();
-  const postsList = useAppSelector(posts);
 
-  function addTask() {
+  const addTask = useCallback(() => {
     const taskStructure = {
-      urgentLevel,
+      urgentLevel: urgentLevel.length === 0 ? Uregentlevel[0] : urgentLevel,
       post: task,
-      category: "",
+      category: categoryOption.length === 0 ? Categories[0] : categoryOption,
     };
 
     dispatch(post(taskStructure));
     setTask("");
-  }
-
-  const Uregentlevel = ["not urgent", "uregent", "super uregent"];
+  }, [categoryOption, task, urgentLevel]);
 
   return (
     <>
@@ -28,35 +28,13 @@ export default function Home() {
         <title>Todo | Home</title>
       </Helmet>
 
-      <div>
-        <input
-          placeholder="write your next task"
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-        />
-        <select
-          name="category"
-          id="category"
-          onClick={(event) => setUrgentLevel(event.currentTarget.value)}
-        >
-          {Uregentlevel.map((level, i) => (
-            <option value={level} key={i}>
-              {level}
-            </option>
-          ))}
-        </select>
-        <button aria-label="post todo" type="button" onClick={() => addTask()}>
-          +
-        </button>
-
-        {postsList?.map((list) => (
-          <div className="flex gap-3">
-            <div>{list.post}</div>
-            <div>{list.category}</div>
-            <div>{list.urgentLevel}</div>
-          </div>
-        ))}
-      </div>
+      <AddTask
+        task={task}
+        setUrgentLevel={setUrgentLevel}
+        setTask={setTask}
+        setCategoryOption={setCategoryOption}
+        addTask={addTask}
+      />
     </>
   );
 }

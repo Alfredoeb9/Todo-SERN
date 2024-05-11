@@ -34,6 +34,8 @@ export const postSlice = createSlice({
         },
       ];
     },
+
+    removePost: (state, action) => {},
   },
 });
 
