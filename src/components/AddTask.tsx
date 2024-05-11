@@ -5,6 +5,7 @@ import { useAppSelector } from "../redux/hooks";
 
 interface AddTaskTypes {
   task: string;
+  setTitle: Dispatch<SetStateAction<string>> | any;
   setUrgentLevel?: Dispatch<SetStateAction<string>> | any;
   setCategoryOption?: Dispatch<SetStateAction<string>> | any;
   setTask?: Dispatch<SetStateAction<string>> | any;
@@ -13,6 +14,7 @@ interface AddTaskTypes {
 
 export default function AddTask({
   task,
+  setTitle,
   setUrgentLevel,
   setCategoryOption,
   setTask,
@@ -21,6 +23,10 @@ export default function AddTask({
   const postsList = useAppSelector(posts);
   return (
     <div>
+      <input
+        placeholder="Task Title"
+        onChange={(e) => setTitle(e.target.value)}
+      />
       <input
         placeholder="write your next task"
         value={task}
