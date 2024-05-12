@@ -5,6 +5,7 @@ import { RootState } from "../store";
 export type UregentLevels = "not urgent" | "uregent" | "super urgent";
 
 interface PostsDataState {
+  id: number;
   category: string;
   post: string;
   urgentLevel: UregentLevels;
@@ -28,9 +29,10 @@ export const postSlice = createSlice({
       state.postList = [
         ...state.postList,
         {
-          category: action.payload.category,
-          post: action.payload.task,
-          urgentLevel: action.payload.priority,
+          id: action.payload[0].id,
+          category: action.payload[0].category,
+          post: action.payload[0].task,
+          urgentLevel: action.payload[0].priority,
         },
       ];
     },
