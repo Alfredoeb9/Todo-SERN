@@ -27,10 +27,13 @@ export default function Home() {
     sendPost(taskStructure);
     dispatch(post(taskStructure));
     setTask("");
+    setTitle("");
+    setCategoryOption("");
+    setUrgentLevel("");
   }, [categoryOption, task, urgentLevel]);
 
   return (
-    <div className="content-center">
+    <div className="max-w-screen-sm m-auto">
       <Helmet>
         <title>Todo | Home</title>
       </Helmet>
