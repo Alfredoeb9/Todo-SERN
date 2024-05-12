@@ -25,7 +25,7 @@ export default function Home() {
       title,
     };
     sendPost(taskStructure);
-    dispatch(post(taskStructure));
+    // dispatch(post(taskStructure));
     setTask("");
     setTitle("");
     setCategoryOption("");
@@ -41,6 +41,7 @@ export default function Home() {
       <TotalTasks />
 
       <AddTask
+        email={getEmail}
         task={task}
         setTitle={setTitle}
         setUrgentLevel={setUrgentLevel}
