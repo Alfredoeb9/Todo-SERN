@@ -49,8 +49,10 @@ function App() {
           <p>{error !== undefined && error}</p>
         </Modal>
       )}
-      <Navbar />
-      <Home />
+      <div className="container m-auto">
+        <Navbar />
+        <Home />
+      </div>
     </HelmetProvider>
   );
 }

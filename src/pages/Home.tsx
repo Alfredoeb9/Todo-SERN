@@ -5,6 +5,7 @@ import { post, posts } from "../redux/features/postsSlice";
 import { Uregentlevel, Categories } from "../lib/hardData";
 import AddTask from "../components/AddTask";
 import { useSendPost } from "../hooks/useSendPost";
+import TotalTasks from "../components/TotalTasks";
 
 export default function Home() {
   const [task, setTask] = useState("");
@@ -29,10 +30,12 @@ export default function Home() {
   }, [categoryOption, task, urgentLevel]);
 
   return (
-    <>
+    <div className="content-center">
       <Helmet>
         <title>Todo | Home</title>
       </Helmet>
+
+      <TotalTasks />
 
       <AddTask
         task={task}
@@ -42,6 +45,6 @@ export default function Home() {
         setCategoryOption={setCategoryOption}
         addTask={addTask}
       />
-    </>
+    </div>
   );
 }

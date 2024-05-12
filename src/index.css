@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+#root {
+  background-color: #0d0d0d;
+  height: 100vh;
+}
+
 .modal {
   position: fixed;
   top: 0;
