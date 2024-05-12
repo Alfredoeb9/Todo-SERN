@@ -63,7 +63,7 @@ function App() {
   }
   return (
     <HelmetProvider context={helmetContext}>
-      {user.length == 0 && (
+      {user.length === 0 && (
         <Modal show={show} handleClose={hideModal}>
           <input
             placeholder="email"

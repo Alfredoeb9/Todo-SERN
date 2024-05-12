@@ -1,5 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from "react";
-import { useLogin } from "../hooks/useLogin";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import "../index.css";
 
 interface ModalTypes {

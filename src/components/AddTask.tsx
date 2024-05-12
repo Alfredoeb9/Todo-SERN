@@ -40,6 +40,7 @@ export default function AddTask({
           <div className="pb-3">
             <input
               placeholder="Task Title"
+              maxLength={35}
               onChange={(e) => setTitle(e.target.value)}
               className="bg-[#1e1e1e] placeholder-[#716a60] rounded-xl mr-4 text-white"
             />
@@ -107,8 +108,8 @@ export default function AddTask({
           >
             <div className="flex items-center gap-2">
               <div className="border-2 border-[#db4a2d] h-3 w-3 rounded-full bg-[#1e1e1e]"></div>
-              <div>{list.post}</div>
               <div>{list.category}</div>
+              <div>{list.post}</div>
               <div>{list.urgentLevel}</div>
             </div>
 

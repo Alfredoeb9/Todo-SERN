@@ -1,7 +1,5 @@
 import { useCallback, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { post, posts } from "../redux/features/postsSlice";
 import { Uregentlevel, Categories } from "../lib/hardData";
 import AddTask from "../components/AddTask";
 import { useSendPost } from "../hooks/useSendPost";
@@ -12,8 +10,8 @@ export default function Home() {
   const [title, setTitle] = useState("");
   const [urgentLevel, setUrgentLevel] = useState("");
   const [categoryOption, setCategoryOption] = useState("");
-  const { sendPost, error, isLoading } = useSendPost();
-  const dispatch = useAppDispatch();
+  const { sendPost } = useSendPost();
+  // const dispatch = useAppDispatch();
   const getEmail = JSON.parse(localStorage.getItem("user")!);
 
   const addTask = useCallback(() => {
@@ -30,7 +28,7 @@ export default function Home() {
     setTitle("");
     setCategoryOption("");
     setUrgentLevel("");
-  }, [categoryOption, task, urgentLevel]);
+  }, [categoryOption, getEmail, sendPost, task, title, urgentLevel]);
 
   return (
     <div className="max-w-screen-sm m-auto">
