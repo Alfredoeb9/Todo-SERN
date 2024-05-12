@@ -35,7 +35,7 @@ export const useSendPost = () => {
     }
 
     if (response.ok) {
-      dispatch(post(json.todo));
+      dispatch(post(json.todo[0]));
       setIsLoading(false);
     }
   };

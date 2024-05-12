@@ -2,13 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-export type UregentLevels = "not urgent" | "uregent" | "super urgent";
-
 interface PostsDataState {
   id: number;
   category: string;
   post: string;
-  urgentLevel: UregentLevels;
+  urgentLevel: "not urgent" | "uregent" | "super urgent";
 }
 
 interface PostsState {
@@ -29,10 +27,10 @@ export const postSlice = createSlice({
       state.postList = [
         ...state.postList,
         {
-          id: action.payload[0].id,
-          category: action.payload[0].category,
-          post: action.payload[0].task,
-          urgentLevel: action.payload[0].priority,
+          id: action.payload.id,
+          category: action.payload.title,
+          post: action.payload.task,
+          urgentLevel: action.payload.priority,
         },
       ];
     },
@@ -49,6 +47,6 @@ export const postSlice = createSlice({
 export const { post, removeTodo } = postSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const posts = (state: RootState) => state?.posts?.postList;
+export const posts = (state: RootState) => state?.post?.postList;
 
 export default postSlice;
