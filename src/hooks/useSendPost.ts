@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch } from "../redux/hooks";
+import { post } from "../redux/features/postsSlice";
 
 interface TodosType {
   title: string;
@@ -28,7 +29,15 @@ export const useSendPost = () => {
 
     const json = await response.json();
 
-    console.log("json", json);
+    if (!response.ok) {
+      setIsLoading(false);
+      setError(json.error);
+    }
+
+    if (response.ok) {
+      dispatch(post(json.todo));
+      setIsLoading(false);
+    }
   };
 
   return { sendPost, error, isLoading };
