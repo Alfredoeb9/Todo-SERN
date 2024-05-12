@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch } from "../redux/hooks";
+import { removeTodo } from "../redux/features/postsSlice";
 
 interface TodoType {
   id: number;
@@ -35,7 +36,7 @@ export const useRemovePost = () => {
     }
 
     if (response.ok) {
-      // dispatch()
+      dispatch(removeTodo(todoObject.id));
       setIsLoading(false);
     }
   };

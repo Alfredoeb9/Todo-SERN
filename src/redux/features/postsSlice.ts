@@ -37,11 +37,16 @@ export const postSlice = createSlice({
       ];
     },
 
-    removePost: (state, action) => {},
+    removeTodo: (state, action: PayloadAction<number>) => {
+      const newState = state.postList.filter(
+        (post) => post.id !== action.payload
+      );
+      state.postList = newState;
+    },
   },
 });
 
-export const { post } = postSlice.actions;
+export const { post, removeTodo } = postSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const posts = (state: RootState) => state?.posts?.postList;
