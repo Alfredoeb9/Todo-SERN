@@ -29,8 +29,8 @@ export const postSlice = createSlice({
         ...state.postList,
         {
           category: action.payload.category,
-          post: action.payload.post,
-          urgentLevel: action.payload.urgentLevel,
+          post: action.payload.task,
+          urgentLevel: action.payload.priority,
         },
       ];
     },
