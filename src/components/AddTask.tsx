@@ -4,6 +4,7 @@ import { posts } from "../redux/features/postsSlice";
 import { useAppSelector } from "../redux/hooks";
 import { EditIcon } from "./svg/EditIcon";
 import { DeleteIcon } from "./svg/DeleteIcon";
+import { useRemovePost } from "../hooks/useRemovePost";
 
 interface AddTaskTypes {
   task: string;
@@ -12,6 +13,7 @@ interface AddTaskTypes {
   setCategoryOption?: Dispatch<SetStateAction<string>> | any;
   setTask?: Dispatch<SetStateAction<string>> | any;
   addTask: () => void;
+  email: string;
 }
 
 export default function AddTask({
@@ -21,10 +23,16 @@ export default function AddTask({
   setCategoryOption,
   setTask,
   addTask,
+  email,
 }: AddTaskTypes) {
   const postsList = useAppSelector(posts);
+  const { removePost, error, isLoading } = useRemovePost();
 
-  console.log("post", postsList);
+  const handleRemoveTodo = async (list: any) => {
+    const newList = { ...list, email };
+    await removePost(newList);
+  };
+
   return (
     <div className="">
       <div className="flex justify-center items-start">
@@ -83,9 +91,10 @@ export default function AddTask({
         </button>
       </div>
 
+      {/* move this into separate component */}
       {postsList?.map((list, i) => (
         <div
-          className="flex gap-3 items-center justify-around max-w-xs m-auto rounded-full px-3 py-4 text-white border-2	border-[#514c48] bg-[#1e1e1e]"
+          className="flex gap-3 items-center justify-around max-w-sm m-auto rounded-full px-3 py-4 mb-3 text-white border-2	border-[#514c48] bg-[#1e1e1e]"
           key={i}
         >
           <div className="flex items-center gap-2">
@@ -98,11 +107,11 @@ export default function AddTask({
           <div className="flex gap-2">
             <EditIcon
               className="cursor-pointer"
-              onClick={(e) => console.log(e)}
+              onClick={(e) => console.log()}
             />
             <DeleteIcon
               className="cursor-pointer"
-              onClick={(e) => console.log(e)}
+              onClick={() => handleRemoveTodo(list)}
             />
           </div>
         </div>
