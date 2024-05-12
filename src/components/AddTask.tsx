@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, Key, SetStateAction } from "react";
 import { Uregentlevel, Categories } from "../lib/hardData";
 import { posts } from "../redux/features/postsSlice";
 import { useAppSelector } from "../redux/hooks";
@@ -26,7 +26,7 @@ export default function AddTask({
   email,
 }: AddTaskTypes) {
   const postsList = useAppSelector(posts);
-  const { removePost, error, isLoading } = useRemovePost();
+  const { removePost } = useRemovePost();
 
   const handleRemoveTodo = async (list: any) => {
     const newList = { ...list, email };
@@ -92,30 +92,39 @@ export default function AddTask({
       </div>
 
       {/* move this into separate component */}
-      {postsList?.map((list, i) => (
-        <div
-          className="flex gap-3 items-center justify-around max-w-sm m-auto rounded-full px-3 py-4 mb-3 text-white border-2	border-[#514c48] bg-[#1e1e1e]"
-          key={i}
-        >
-          <div className="flex items-center gap-2">
-            <div className="border-2 border-[#db4a2d] h-3 w-3 rounded-full bg-[#1e1e1e]"></div>
-            <div>{list.post}</div>
-            <div>{list.category}</div>
-            <div>{list.urgentLevel}</div>
-          </div>
+      {postsList?.map(
+        (
+          list: {
+            post: string;
+            category: string;
+            urgentLevel: string;
+          },
+          i: Key
+        ) => (
+          <div
+            className="flex gap-3 items-center justify-around max-w-sm m-auto rounded-full px-3 py-4 mb-3 text-white border-2	border-[#514c48] bg-[#1e1e1e]"
+            key={i}
+          >
+            <div className="flex items-center gap-2">
+              <div className="border-2 border-[#db4a2d] h-3 w-3 rounded-full bg-[#1e1e1e]"></div>
+              <div>{list.post}</div>
+              <div>{list.category}</div>
+              <div>{list.urgentLevel}</div>
+            </div>
 
-          <div className="flex gap-2">
-            <EditIcon
-              className="cursor-pointer"
-              onClick={(e) => console.log()}
-            />
-            <DeleteIcon
-              className="cursor-pointer"
-              onClick={() => handleRemoveTodo(list)}
-            />
+            <div className="flex gap-2">
+              <EditIcon
+                className="cursor-pointer"
+                onClick={(e) => console.log()}
+              />
+              <DeleteIcon
+                className="cursor-pointer"
+                onClick={() => handleRemoveTodo(list)}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      )}
     </div>
   );
 }
