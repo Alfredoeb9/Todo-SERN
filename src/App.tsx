@@ -20,7 +20,7 @@ function App() {
   const { login2, error } = useLogin();
 
   // Queries
-  const query = useQuery({
+  useQuery({
     queryKey: ["todos"],
     queryFn: async () => {
       const response = await fetch(
@@ -40,6 +40,12 @@ function App() {
       const json = await response.json();
 
       if (response.ok) {
+        json.data.map((d: any) => {
+          if (user) {
+            return dispatch(post(d));
+          }
+          return undefined;
+        });
         return json.data;
       }
     },
@@ -50,13 +56,7 @@ function App() {
     if (user.length === 0 || user === undefined) {
       setShow(true);
     }
-    query.data?.map((d: any) => {
-      if (user) {
-        return dispatch(post(d));
-      }
-      return undefined;
-    });
-  }, [dispatch, query.data, user]);
+  }, [user]);
 
   function hideModal() {
     setShow(false);
