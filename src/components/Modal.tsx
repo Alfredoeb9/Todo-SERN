@@ -12,7 +12,7 @@ export default function Modal({ handleClose, show, children }: ModalTypes) {
 
   return (
     <div className={showHideClassName}>
-      <section className="modal-main">{children}</section>
+      <section className={`modal-main `}>{children}</section>
     </div>
   );
 }
