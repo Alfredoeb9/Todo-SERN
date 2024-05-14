@@ -2,11 +2,12 @@
 
 This project was bootstrapped with
 
-- React
-- Node.js
+- React w/ Typescript
+- Node.js w/ Typescript
 - Express.js
-- Sqlite
+- SQLite
 - Redux/toolkit
+- React-Query
 
 ## Available Scripts
 
