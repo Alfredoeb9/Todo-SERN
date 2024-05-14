@@ -61,6 +61,7 @@ function App() {
   function hideModal() {
     setShow(false);
   }
+
   return (
     <HelmetProvider context={helmetContext}>
       {user.length === 0 && (
@@ -76,13 +77,16 @@ function App() {
               />
               <button
                 type="button"
-                className="border-2 border-black px-8 py-1 round mt-4 hover:scale-105 transition-all"
+                className="border-2 border-black px-8 py-1 round mt-4 hover:scale-105 transition-all font-bold"
                 // disabled={isLoading}
+                onClick={() => login2(email)}
               >
                 LOGIN
               </button>
 
-              <p>{error !== undefined && error}</p>
+              <p className="text-red-600 text-md pt-2">
+                {error !== undefined && error}
+              </p>
             </form>
           </div>
         </Modal>
