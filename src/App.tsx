@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import "./App.css";
 import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";

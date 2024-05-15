@@ -116,7 +116,7 @@ export default function AddTask({
             <div className="flex gap-2">
               <EditIcon
                 className="cursor-pointer"
-                onClick={(e) => console.log()}
+                // onClick={(e) => console.log()}
               />
               <DeleteIcon
                 className="cursor-pointer"
