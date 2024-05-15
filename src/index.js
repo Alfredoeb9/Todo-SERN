@@ -6,7 +6,19 @@ import ReduxProvider from "./components/Providers/ReduxProvider";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 // Create a client
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // staleTime: 1000,
+      refetchOnMount: true,
+      retryOnMount: true,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      retry: false,
+      gcTime: 0,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
