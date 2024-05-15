@@ -11,32 +11,44 @@ interface TodosType {
 
 export const useSendPost = () => {
   const dispatch = useAppDispatch();
-  const [error, setError] = useState(undefined);
+  const [error, setError] = useState<undefined | string>(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
   const sendPost = async (postObject: TodosType) => {
     setIsLoading(true);
     setError(undefined);
 
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/todo/submit`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postObject),
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/todo/submit`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(postObject),
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        setIsLoading(false);
+        setError(json.error);
       }
-    );
 
-    const json = await response.json();
-
-    if (!response.ok) {
-      setIsLoading(false);
-      setError(json.error);
-    }
-
-    if (response.ok) {
-      dispatch(post(json.todo[0]));
-      setIsLoading(false);
+      if (response.ok) {
+        dispatch(post(json.todo[0]));
+        setIsLoading(false);
+        return json.todo[0];
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message == "Failed to fetch") {
+          setIsLoading(false);
+          return setError("There seems to be a problem please be patient");
+        } else {
+          throw new Error(error.message);
+        }
+      }
     }
   };
 
