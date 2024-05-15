@@ -5,6 +5,7 @@ import { useAppSelector } from "../redux/hooks";
 import { EditIcon } from "./svg/EditIcon";
 import { DeleteIcon } from "./svg/DeleteIcon";
 import { useRemovePost } from "../hooks/useRemovePost";
+import { useTodoCompleted } from "../hooks/useTodoCompleted";
 
 interface AddTaskTypes {
   task: string;
@@ -16,6 +17,14 @@ interface AddTaskTypes {
   email: string;
 }
 
+interface ListTypes {
+  id: number;
+  category: string;
+  post: string;
+  urgentLevel: string;
+  completed: boolean;
+}
+
 export default function AddTask({
   task,
   setTitle,
@@ -25,12 +34,19 @@ export default function AddTask({
   addTask,
   email,
 }: AddTaskTypes) {
+  const { completedTodo, error } = useTodoCompleted();
   const postsList = useAppSelector(posts);
   const { removePost } = useRemovePost();
 
-  const handleRemoveTodo = async (list: any) => {
+  const handleRemoveTodo = async (list: ListTypes) => {
     const newList = { ...list, email };
     await removePost(newList);
+  };
+
+  const handleCompleteTodo = async (list: ListTypes) => {
+    if (list.completed) return;
+    const newList = { id: list?.id, email };
+    await completedTodo(newList);
   };
 
   return (
@@ -93,39 +109,35 @@ export default function AddTask({
       </div>
 
       {/* move this into separate component */}
-      {postsList?.map(
-        (
-          list: {
-            post: string;
-            category: string;
-            urgentLevel: string;
-          },
-          i: Key
-        ) => (
-          <div
-            className="flex gap-3 items-center justify-around max-w-sm m-auto rounded-full px-3 py-4 mb-3 text-white border-2	border-[#514c48] bg-[#1e1e1e]"
-            key={i}
-          >
-            <div className="flex items-center gap-2">
-              <div className="border-2 border-[#db4a2d] h-3 w-3 rounded-full bg-[#1e1e1e]"></div>
-              <div>{list.category}</div>
-              <div>{list.post}</div>
-              <div>{list.urgentLevel}</div>
-            </div>
-
-            <div className="flex gap-2">
-              <EditIcon
-                className="cursor-pointer"
-                // onClick={(e) => console.log()}
-              />
-              <DeleteIcon
-                className="cursor-pointer"
-                onClick={() => handleRemoveTodo(list)}
-              />
-            </div>
+      {postsList?.map((list: ListTypes, i: Key) => (
+        <div
+          className="flex gap-3 items-center justify-between max-w-sm m-auto rounded-full px-3 py-4 mb-3 text-white border-2	border-[#514c48] bg-[#1e1e1e]"
+          key={i}
+        >
+          <div className="flex items-center gap-2">
+            <div
+              className={`border-2 border-[#db4a2d] h-3 w-3 rounded-full cursor-pointer ${
+                list?.completed === false ? "bg-[#1e1e1e]" : "bg-green-500"
+              }`}
+              onClick={() => handleCompleteTodo(list)}
+            />
+            <div>{list?.category}</div>
+            <div>{list?.post}</div>
+            <div>{list?.urgentLevel}</div>
           </div>
-        )
-      )}
+
+          <div className="flex gap-2">
+            <EditIcon
+              className="cursor-pointer"
+              // onClick={(e) => console.log()}
+            />
+            <DeleteIcon
+              className="cursor-pointer"
+              onClick={() => handleRemoveTodo(list)}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

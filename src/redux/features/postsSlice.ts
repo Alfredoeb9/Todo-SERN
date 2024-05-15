@@ -7,6 +7,7 @@ interface PostsDataState {
   category: string;
   post: string;
   urgentLevel: "not urgent" | "uregent" | "super urgent";
+  completed: boolean;
 }
 
 interface PostsState {
@@ -31,6 +32,7 @@ export const postSlice = createSlice({
           category: action.payload.title,
           post: action.payload.task,
           urgentLevel: action.payload.priority,
+          completed: action.payload.completed,
         },
       ];
     },
@@ -41,10 +43,20 @@ export const postSlice = createSlice({
       );
       state.postList = newState;
     },
+
+    updateTodo: (state, action: PayloadAction<any>) => {
+      const newState = state.postList.map((todo, i) => {
+        if (todo.id === action.payload[i].id) {
+          todo.completed = action.payload[i].completed;
+        }
+        return todo;
+      });
+      state.postList = newState;
+    },
   },
 });
 
-export const { post, removeTodo } = postSlice.actions;
+export const { post, removeTodo, updateTodo } = postSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const posts = (state: RootState) => state?.post?.postList;

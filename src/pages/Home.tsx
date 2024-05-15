@@ -21,6 +21,7 @@ export default function Home() {
       task,
       category: categoryOption.length === 0 ? Categories[0] : categoryOption,
       title,
+      completed: false,
     };
     sendPost(taskStructure);
     // dispatch(post(taskStructure));

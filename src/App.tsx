@@ -67,7 +67,13 @@ function App() {
         <Modal show={show} handleClose={hideModal}>
           <div className="px-2 max-w-96 m-auto text-center">
             <h1 className="font-bold text-xl sm:text-2xl">MY TODO APP</h1>
-            <form onSubmit={() => login2(email)} className="py-3">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                login2(email);
+              }}
+              className="py-3"
+            >
               <input
                 placeholder="Email"
                 type="email"
