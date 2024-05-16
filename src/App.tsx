@@ -3,7 +3,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
-import { post } from "./redux/features/postsSlice";
+import { increment, post } from "./redux/features/postsSlice";
 import LoginModal from "./components/Login/LoginModal";
 
 const helmetContext = {};
@@ -36,6 +36,9 @@ function App() {
       if (response.ok) {
         json.data.map((d: any) => {
           if (user) {
+            if (d.completed) {
+              dispatch(increment());
+            }
             return dispatch(post(d));
           }
           return undefined;

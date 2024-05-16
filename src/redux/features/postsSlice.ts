@@ -13,11 +13,13 @@ interface PostsDataState {
 interface PostsState {
   post: string;
   postList: PostsDataState[];
+  completedTodos: number;
 }
 
 const initialState: PostsState = {
   post: "",
   postList: [],
+  completedTodos: 0,
 };
 
 export const postSlice = createSlice({
@@ -38,9 +40,14 @@ export const postSlice = createSlice({
     },
 
     removeTodo: (state, action: PayloadAction<number>) => {
-      const newState = state.postList.filter(
-        (post) => post.id !== action.payload
-      );
+      const newState = state.postList.filter((post) => {
+        if (post.id === action.payload) {
+          if (post.completed) {
+            state.completedTodos -= 1;
+          }
+        }
+        return post.id !== action.payload;
+      });
       state.postList = newState;
     },
 
@@ -52,11 +59,21 @@ export const postSlice = createSlice({
         return todo;
       });
       state.postList = newState;
+      state.completedTodos += 1;
+    },
+
+    increment: (state) => {
+      state.completedTodos += 1;
+    },
+
+    decrement: (state) => {
+      state.completedTodos -= 1;
     },
   },
 });
 
-export const { post, removeTodo, updateTodo } = postSlice.actions;
+export const { post, removeTodo, updateTodo, increment, decrement } =
+  postSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const posts = (state: RootState) => state?.post?.postList;
