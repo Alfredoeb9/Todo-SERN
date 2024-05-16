@@ -15,6 +15,7 @@ interface AddTaskTypes {
   setTask?: Dispatch<SetStateAction<string>> | any;
   addTask: () => void;
   email: string;
+  title: string;
 }
 
 interface ListTypes {
@@ -33,24 +34,27 @@ export default function AddTask({
   setTask,
   addTask,
   email,
+  title,
 }: AddTaskTypes) {
-  const { completedTodo, error } = useTodoCompleted();
+  // const { completedTodo, error } = useTodoCompleted();
+  const completeMutate = useTodoCompleted();
   const postsList = useAppSelector(posts);
-  const { removePost } = useRemovePost();
+  const mutate = useRemovePost();
 
   const handleRemoveTodo = async (list: ListTypes) => {
     const newList = { ...list, email };
-    await removePost(newList);
+    mutate.mutate(newList);
+    // await removePost(newList);
   };
 
   const handleCompleteTodo = async (list: ListTypes) => {
     if (list.completed) return;
-    const newList = { id: list?.id, email };
-    await completedTodo(newList);
+    const newList = { id: list.id, email };
+    completeMutate.mutate(newList);
   };
 
   return (
-    <div className="">
+    <div>
       <div className="flex justify-center items-start">
         <div className="pb-6">
           <div className="pb-3">
@@ -58,6 +62,7 @@ export default function AddTask({
               placeholder="Task Title"
               maxLength={35}
               onChange={(e) => setTitle(e.target.value)}
+              value={title}
               className="bg-[#1e1e1e] placeholder-[#716a60] rounded-xl mr-4 text-white"
             />
             <input
@@ -110,32 +115,36 @@ export default function AddTask({
 
       {/* move this into separate component */}
       {postsList?.map((list: ListTypes, i: Key) => (
-        <div
-          className="flex gap-3 items-center justify-between max-w-sm m-auto rounded-full px-3 py-4 mb-3 text-white border-2	border-[#514c48] bg-[#1e1e1e]"
-          key={i}
-        >
-          <div className="flex items-center gap-2">
-            <div
-              className={`border-2 border-[#db4a2d] h-3 w-3 rounded-full cursor-pointer ${
-                list?.completed === false ? "bg-[#1e1e1e]" : "bg-green-500"
-              }`}
-              onClick={() => handleCompleteTodo(list)}
-            />
-            <div>{list?.category}</div>
-            <div>{list?.post}</div>
-            <div>{list?.urgentLevel}</div>
-          </div>
+        <div key={i}>
+          <div className="flex gap-3 items-center justify-between max-w-sm m-auto rounded-full px-3 py-4 mb-3 text-white border-2	border-[#514c48] bg-[#1e1e1e]">
+            <div className="flex items-center gap-2">
+              <div
+                className={`border-2 border-[#db4a2d] h-3 w-3 rounded-full cursor-pointer ${
+                  list?.completed === false ? "bg-[#1e1e1e]" : "bg-green-500"
+                }`}
+                onClick={() => handleCompleteTodo(list)}
+              />
+              <div>{list?.category}</div>
+              <div>{list?.post}</div>
+              <div>{list?.urgentLevel}</div>
+            </div>
 
-          <div className="flex gap-2">
-            <EditIcon
-              className="cursor-pointer"
-              // onClick={(e) => console.log()}
-            />
-            <DeleteIcon
-              className="cursor-pointer"
-              onClick={() => handleRemoveTodo(list)}
-            />
+            <div className="flex gap-2">
+              <EditIcon
+                className="cursor-pointer"
+                // onClick={(e) => console.log()}
+              />
+              <DeleteIcon
+                className="cursor-pointer"
+                onClick={() => handleRemoveTodo(list)}
+              />
+            </div>
           </div>
+          {mutate.isError && mutate.variables.id === list.id ? (
+            <p className="text-red-500 font-semibold max-w-sm m-auto">
+              Failed to remove Todo
+            </p>
+          ) : null}
         </div>
       ))}
     </div>

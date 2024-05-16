@@ -10,7 +10,8 @@ export default function Home() {
   const [title, setTitle] = useState("");
   const [urgentLevel, setUrgentLevel] = useState("");
   const [categoryOption, setCategoryOption] = useState("");
-  const { sendPost } = useSendPost();
+  // const { sendPost } = useSendPost();
+  const mutate = useSendPost();
   // const dispatch = useAppDispatch();
   const getEmail = JSON.parse(localStorage.getItem("user")!);
 
@@ -23,13 +24,14 @@ export default function Home() {
       title,
       completed: false,
     };
-    sendPost(taskStructure);
+    // sendPost(taskStructure);
+    mutate.mutate(taskStructure);
     // dispatch(post(taskStructure));
     setTask("");
     setTitle("");
     setCategoryOption("");
     setUrgentLevel("");
-  }, [categoryOption, getEmail, sendPost, task, title, urgentLevel]);
+  }, [categoryOption, getEmail, mutate, task, title, urgentLevel]);
 
   return (
     <div className="max-w-screen-sm m-auto">
@@ -43,11 +45,15 @@ export default function Home() {
         email={getEmail}
         task={task}
         setTitle={setTitle}
+        title={title}
         setUrgentLevel={setUrgentLevel}
         setTask={setTask}
         setCategoryOption={setCategoryOption}
         addTask={addTask}
       />
+      {mutate.isError ? (
+        <div className="text-red-500 font-semibold">An error occurred</div>
+      ) : null}
     </div>
   );
 }
