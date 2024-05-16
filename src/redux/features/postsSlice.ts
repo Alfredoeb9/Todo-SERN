@@ -47,7 +47,7 @@ export const postSlice = createSlice({
     updateTodo: (state, action: PayloadAction<any>) => {
       const newState = state.postList.map((todo, i) => {
         if (todo.id === action.payload.id) {
-          todo.completed = action.payload.completed;
+          todo.completed = true;
         }
         return todo;
       });
