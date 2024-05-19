@@ -119,7 +119,11 @@ export default function AddTask({
           <div className="flex gap-3 items-center justify-between max-w-sm m-auto rounded-full px-3 py-4 mb-3 text-white border-2	border-[#514c48] bg-[#1e1e1e]">
             <div className="flex items-center gap-2">
               <div
-                className={`border-2 border-[#db4a2d] h-3 w-3 rounded-full cursor-pointer ${
+                className={`border-2  ${
+                  list?.completed === false
+                    ? "border-[#db4a2d]"
+                    : "border-green-500"
+                } h-3 w-3 rounded-full cursor-pointer ${
                   list?.completed === false ? "bg-[#1e1e1e]" : "bg-green-500"
                 }`}
                 onClick={() => handleCompleteTodo(list)}

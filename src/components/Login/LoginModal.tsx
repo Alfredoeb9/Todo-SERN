@@ -13,13 +13,13 @@ export default function LoginModal({ user }: string | any) {
     }
   }, [user]);
 
-  function hideModal() {
-    setShow(false);
-  }
+  // function hideModal() {
+  //   setShow(false);
+  // }
   return (
     <>
       {user.length === 0 && (
-        <Modal show={show} handleClose={hideModal}>
+        <Modal show={show}>
           <div className="px-2 max-w-96 m-auto text-center">
             <h1 className="font-bold text-xl sm:text-2xl">MY TODO APP</h1>
             <form
