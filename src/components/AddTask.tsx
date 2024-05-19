@@ -3,10 +3,10 @@ import { Uregentlevel, Categories } from "../lib/hardData";
 
 interface AddTaskTypes {
   task: string;
-  setTitle: Dispatch<SetStateAction<string>> | any;
-  setUrgentLevel?: Dispatch<SetStateAction<string>> | any;
-  setCategoryOption?: Dispatch<SetStateAction<string>> | any;
-  setTask?: Dispatch<SetStateAction<string>> | any;
+  setTitle: Dispatch<SetStateAction<string>>;
+  setUrgentLevel: Dispatch<SetStateAction<string>>;
+  setCategoryOption: Dispatch<SetStateAction<string>>;
+  setTask: Dispatch<SetStateAction<string>>;
   addTask: () => void;
   title: string;
 }
@@ -28,14 +28,14 @@ export default function AddTask({
             <input
               placeholder="Task Title"
               maxLength={35}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.currentTarget.value)}
               value={title}
               className="bg-[#1e1e1e] placeholder-[#716a60] rounded-xl mr-4 text-white"
             />
             <input
               placeholder="write your next task"
               value={task}
-              onChange={(e) => setTask(e.target.value)}
+              onChange={(e) => setTask(e.currentTarget.value)}
               className="bg-[#1e1e1e] placeholder-[#716a60] rounded-xl text-white"
             />
           </div>
@@ -44,7 +44,7 @@ export default function AddTask({
             <select
               name="urgentlevel"
               id="urgentlevel"
-              onClick={(event) => setUrgentLevel(event.currentTarget.value)}
+              onClick={(e) => setUrgentLevel(e.currentTarget.value)}
               className="mr-4 rounded-full cursor-pointer font-semibold"
             >
               {Uregentlevel.map((level, i) => (

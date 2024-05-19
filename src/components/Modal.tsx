@@ -1,8 +1,8 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ReactNode } from "react";
 import "../index.css";
 
 interface ModalTypes {
-  show: Dispatch<SetStateAction<string>> | any;
+  show: boolean;
   children: ReactNode;
 }
 

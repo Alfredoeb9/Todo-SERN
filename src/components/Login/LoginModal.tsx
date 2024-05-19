@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
 import Modal from "../Modal";
 
-export default function LoginModal({ user }: string | any) {
+interface LoginTypes {
+  user: string;
+}
+
+export default function LoginModal({ user }: LoginTypes) {
   const { login2, error } = useLogin();
   const [email, setEmail] = useState("");
   const [show, setShow] = useState(false);
@@ -13,9 +17,6 @@ export default function LoginModal({ user }: string | any) {
     }
   }, [user]);
 
-  // function hideModal() {
-  //   setShow(false);
-  // }
   return (
     <>
       {user.length === 0 && (

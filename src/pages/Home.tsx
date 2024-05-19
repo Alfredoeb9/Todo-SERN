@@ -11,9 +11,7 @@ export default function Home() {
   const [title, setTitle] = useState("");
   const [urgentLevel, setUrgentLevel] = useState("");
   const [categoryOption, setCategoryOption] = useState("");
-  // const { sendPost } = useSendPost();
   const mutate = useSendPost();
-  // const dispatch = useAppDispatch();
   const getEmail = JSON.parse(localStorage.getItem("user")!);
 
   const addTask = useCallback(() => {
@@ -25,9 +23,7 @@ export default function Home() {
       title,
       completed: false,
     };
-    // sendPost(taskStructure);
     mutate.mutate(taskStructure);
-    // dispatch(post(taskStructure));
     setTask("");
     setTitle("");
     setCategoryOption("");
