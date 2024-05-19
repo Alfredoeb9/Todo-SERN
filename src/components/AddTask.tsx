@@ -1,11 +1,5 @@
-import { Dispatch, Key, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Uregentlevel, Categories } from "../lib/hardData";
-import { posts } from "../redux/features/postsSlice";
-import { useAppSelector } from "../redux/hooks";
-import { EditIcon } from "./svg/EditIcon";
-import { DeleteIcon } from "./svg/DeleteIcon";
-import { useRemovePost } from "../hooks/useRemovePost";
-import { useTodoCompleted } from "../hooks/useTodoCompleted";
 
 interface AddTaskTypes {
   task: string;
@@ -14,16 +8,7 @@ interface AddTaskTypes {
   setCategoryOption?: Dispatch<SetStateAction<string>> | any;
   setTask?: Dispatch<SetStateAction<string>> | any;
   addTask: () => void;
-  email: string;
   title: string;
-}
-
-interface ListTypes {
-  id: number;
-  category: string;
-  post: string;
-  urgentLevel: string;
-  completed: boolean;
 }
 
 export default function AddTask({
@@ -33,26 +18,8 @@ export default function AddTask({
   setCategoryOption,
   setTask,
   addTask,
-  email,
   title,
 }: AddTaskTypes) {
-  // const { completedTodo, error } = useTodoCompleted();
-  const completeMutate = useTodoCompleted();
-  const postsList = useAppSelector(posts);
-  const mutate = useRemovePost();
-
-  const handleRemoveTodo = async (list: ListTypes) => {
-    const newList = { ...list, email };
-    mutate.mutate(newList);
-    // await removePost(newList);
-  };
-
-  const handleCompleteTodo = async (list: ListTypes) => {
-    if (list.completed) return;
-    const newList = { id: list.id, email };
-    completeMutate.mutate(newList);
-  };
-
   return (
     <div>
       <div className="flex justify-center items-start">
@@ -107,50 +74,11 @@ export default function AddTask({
           aria-label="post todo"
           type="button"
           onClick={() => addTask()}
-          className="bg-[#ff5531] px-5 py-[12.5px] rounded-full text-2xl font-extrabold ml-5"
+          className={`bg-[#ff5531] px-5 py-[12.5px] rounded-full text-2xl font-extrabold ml-5`}
         >
           +
         </button>
       </div>
-
-      {/* move this into separate component */}
-      {postsList?.map((list: ListTypes, i: Key) => (
-        <div key={i}>
-          <div className="flex gap-3 items-center justify-between max-w-sm m-auto rounded-full px-3 py-4 mb-3 text-white border-2	border-[#514c48] bg-[#1e1e1e]">
-            <div className="flex items-center gap-2">
-              <div
-                className={`border-2  ${
-                  list?.completed === false
-                    ? "border-[#db4a2d]"
-                    : "border-green-500"
-                } h-3 w-3 rounded-full cursor-pointer ${
-                  list?.completed === false ? "bg-[#1e1e1e]" : "bg-green-500"
-                }`}
-                onClick={() => handleCompleteTodo(list)}
-              />
-              <div>{list?.category}</div>
-              <div>{list?.post}</div>
-              <div>{list?.urgentLevel}</div>
-            </div>
-
-            <div className="flex gap-2">
-              <EditIcon
-                className="cursor-pointer"
-                // onClick={(e) => console.log()}
-              />
-              <DeleteIcon
-                className="cursor-pointer"
-                onClick={() => handleRemoveTodo(list)}
-              />
-            </div>
-          </div>
-          {mutate.isError && mutate.variables.id === list.id ? (
-            <p className="text-red-500 font-semibold max-w-sm m-auto">
-              Failed to remove Todo
-            </p>
-          ) : null}
-        </div>
-      ))}
     </div>
   );
 }

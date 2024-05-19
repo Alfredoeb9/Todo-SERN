@@ -4,6 +4,7 @@ import { Uregentlevel, Categories } from "../lib/hardData";
 import AddTask from "../components/AddTask";
 import { useSendPost } from "../hooks/useSendPost";
 import TotalTasks from "../components/TotalTasks";
+import TaskList from "../components/TaskList";
 
 export default function Home() {
   const [task, setTask] = useState("");
@@ -42,7 +43,6 @@ export default function Home() {
       <TotalTasks />
 
       <AddTask
-        email={getEmail}
         task={task}
         setTitle={setTitle}
         title={title}
@@ -51,6 +51,9 @@ export default function Home() {
         setCategoryOption={setCategoryOption}
         addTask={addTask}
       />
+
+      <TaskList email={getEmail} />
+
       {mutate.isError ? (
         <div className="text-red-500 font-semibold">An error occurred</div>
       ) : null}

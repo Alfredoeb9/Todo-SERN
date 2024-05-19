@@ -39,6 +39,7 @@ export default function LoginModal({ user }: string | any) {
                 type="button"
                 className="border-2 border-black px-8 py-1 round mt-4 hover:scale-105 transition-all font-bold"
                 // disabled={isLoading}
+
                 onClick={() => login2(email)}
               >
                 LOGIN
