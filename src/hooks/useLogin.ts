@@ -35,7 +35,7 @@ export const useLogin = () => {
       }
     } catch (error) {
       if (error instanceof Error) {
-        if (error.message == "Failed to fetch") {
+        if (error.message === "Failed to fetch") {
           setIsLoading(false);
           return setError("There seems to be a problem please be patient");
         } else {

@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { Helmet } from "react-helmet-async";
 import { Uregentlevel, Categories } from "../lib/hardData";
 import AddTask from "../components/AddTask";
 import { useSendPost } from "../hooks/useSendPost";
@@ -32,10 +31,6 @@ export default function Home() {
 
   return (
     <div className="max-w-screen-sm m-auto">
-      <Helmet>
-        <title>Todo | Home</title>
-      </Helmet>
-
       <TotalTasks />
 
       <AddTask
@@ -50,9 +45,9 @@ export default function Home() {
 
       <TaskList email={getEmail} />
 
-      {mutate.isError ? (
+      {mutate.isError && (
         <div className="text-red-500 font-semibold">An error occurred</div>
-      ) : null}
+      )}
     </div>
   );
 }

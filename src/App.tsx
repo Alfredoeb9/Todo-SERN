@@ -1,12 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { HelmetProvider } from "react-helmet-async";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { increment, post } from "./redux/features/postsSlice";
 import LoginModal from "./components/Login/LoginModal";
-
-const helmetContext = {};
 
 function App() {
   const dispatch = useAppDispatch();
@@ -50,14 +47,14 @@ function App() {
   });
 
   return (
-    <HelmetProvider context={helmetContext}>
+    <>
       <LoginModal user={user} />
 
       <div className="container m-auto">
         <Navbar />
         <Home />
       </div>
-    </HelmetProvider>
+    </>
   );
 }
 
